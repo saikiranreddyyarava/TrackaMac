@@ -1,17 +1,15 @@
 <?php
-
    class MyDB extends SQLite3 {
-
       function __construct() {
-
          $this->open('groupy.db');
+
        }
 }
 $db = new MyDB();
 
 $sq1 =<<<EOF
 
-   CREATE TABLE IF NOT EXISTS List(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,Device varchar(50),VLANS varchar(10),port varchar(10),MACS  varchar(100));
+   CREATE TABLE IF NOT EXISTS List(Device varchar not null,VLANS varchar not null,port varchar,MACS  varchar);
 EOF;
 $ret = $db->exec($sq1);
 if(!$ret){
@@ -19,9 +17,10 @@ if(!$ret){
 }
 $sql =<<<EOF
 
-     CREATE TABLE IF NOT EXISTS switches (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,ip varchar(30),port varchar(10),community varchar(10),version varchar(5),first_probetime TEXT,latest_probetime TEXT,failed_attempts varchar(50));
+     CREATE TABLE IF NOT EXISTS switches (ip varchar not null,port varchar not null,community string not null,version varchar not null,first_probetime varchar null,latest_probetime varchar null,failed_attempts int default 0 not null);
 
 EOF;
+
 
 
 
@@ -32,7 +31,5 @@ EOF;
       echo $db->lastErrorMsg();
 
    }
-
-
 
 ?>
